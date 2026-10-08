@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Feuille de test KYcode</title>
+    <link rel="stylesheet" href="./src/styles.css" />
+    <style>
+      main {
+        max-width: 210mm;
+        margin: 0 auto;
+        padding: 16px;
+      }
+      .intro {
+        display: grid;
+        gap: 8px;
+        margin-bottom: 16px;
+      }
+      .intro h1 {
+        font-size: 20px;
+        margin: 0;
+      }
+      .intro p {
+        margin: 0;
+        color: var(--muted);
+      }
+      .sheet {
+        background: #fff;
+        padding: 10mm;
+        display: grid;
+        gap: 8mm;
+      }
+      .group h2 {
+        font-size: 12pt;
+        margin: 0 0 3mm;
+      }
+      .codes {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6mm 8mm;
+        align-items: flex-end;
+      }
+      figure {
+        margin: 0;
+        display: grid;
+        justify-items: center;
+        gap: 1mm;
+      }
+      figure svg {
+        display: block;
+        height: auto;
+      }
+      figcaption {
+        font-size: 8pt;
+        text-align: center;
+        line-height: 1.3;
+      }
+      @media print {
+        @page {
+          size: A4;
+          margin: 0;
+        }
+        body {
+          background: #fff;
+        }
+        .topnav,
+        .intro {
+          display: none;
+        }
+        main {
+          padding: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="topnav">
+      <span class="brand">KYcode</span>
+      <a href="./index.html">Générateur</a>
+      <a href="./scan.html">Scanner</a>
+      <a href="./feuille-test.html" aria-current="page">Feuille de test</a>
+    </nav>
+    <main>
+      <div class="intro">
+        <h1>Feuille de test</h1>
+        <p>
+          Imprimez à <b>100 % (taille réelle, sans « ajuster à la page »)</b>, puis scannez chaque code avec le scanner.
+          Il reconnaît ces codes et affiche leur taille et leur style ; « Copier l’historique » permet de partager les résultats.
+        </p>
+        <div><button class="primary" onclick="print()">Imprimer</button></div>
+      </div>
+      <div class="sheet" id="sheet"></div>
+    </main>
+    <script type="module" src="./src/test-sheet.ts"></script>
+  </body>
+</html>

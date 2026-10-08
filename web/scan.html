@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#000000" />
+    <title>Scanner KYcode</title>
+    <link rel="stylesheet" href="./src/styles.css" />
+    <style>
+      html,
+      body {
+        height: 100%;
+        background: #000;
+        color: #fff;
+        overflow: hidden;
+      }
+      .stage {
+        position: fixed;
+        inset: 0;
+      }
+      video,
+      #overlay {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+      }
+      video {
+        object-fit: cover;
+      }
+      .bar {
+        position: absolute;
+        left: 0;
+        right: 0;
+        padding: 12px 16px;
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0));
+      }
+      .bar.top {
+        top: 0;
+        padding-top: max(12px, env(safe-area-inset-top));
+      }
+      .bar.bottom {
+        bottom: 0;
+        padding-bottom: max(16px, env(safe-area-inset-bottom));
+        background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7));
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      .bar a,
+      .bar .brand {
+        color: #fff;
+        font-weight: 700;
+        text-decoration: none;
+      }
+      .bar .brand {
+        margin-right: auto;
+      }
+      #hint {
+        position: absolute;
+        left: 50%;
+        top: 18%;
+        transform: translateX(-50%);
+        background: rgba(0, 0, 0, 0.6);
+        padding: 8px 14px;
+        border-radius: 999px;
+        font-weight: 600;
+        white-space: nowrap;
+        max-width: calc(100% - 32px);
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      #stats {
+        font-size: 12px;
+        opacity: 0.75;
+      }
+      .start {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-content: center;
+        gap: 16px;
+        text-align: center;
+        padding: 24px;
+      }
+      .start p {
+        margin: 0;
+        opacity: 0.8;
+        max-width: 32ch;
+      }
+      .sheet {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: #fff;
+        color: var(--ink);
+        border-radius: 18px 18px 0 0;
+        padding: 20px 16px max(20px, env(safe-area-inset-bottom));
+        display: grid;
+        gap: 12px;
+        box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.3);
+      }
+      .sheet .id {
+        font-size: 28px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+      }
+      .sheet .meta {
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .sheet .actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      .sheet details {
+        font-size: 14px;
+      }
+      .sheet ol {
+        margin: 8px 0 0;
+        padding-left: 20px;
+        max-height: 30vh;
+        overflow: auto;
+      }
+      [hidden] {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="stage">
+      <video id="video" playsinline muted autoplay></video>
+      <canvas id="overlay"></canvas>
+
+      <div class="bar top">
+        <span class="brand">KYcode · Scanner</span>
+        <span id="stats"></span>
+        <a href="./index.html">Générateur</a>
+      </div>
+
+      <div id="hint" hidden></div>
+
+      <div class="start" id="start">
+        <h1 style="margin: 0">Scanner KYcode</h1>
+        <p>Autorisez la caméra, puis visez un KYcode. Les 3 repères triangulaires doivent être visibles.</p>
+        <div>
+          <button class="primary" id="startBtn">Activer la caméra</button>
+        </div>
+        <p id="startError" class="status bad" hidden></p>
+      </div>
+
+      <div class="bar bottom" id="controls" hidden>
+        <label class="button" style="background: rgba(255, 255, 255, 0.15); color: #fff; border-color: transparent">
+          Importer une photo
+          <input type="file" accept="image/*" id="file" hidden />
+        </label>
+      </div>
+
+      <div class="sheet" id="sheet" hidden>
+        <div class="status ok">✓ KYcode lu</div>
+        <div class="id mono" id="resultId"></div>
+        <div class="meta" id="resultTest"></div>
+        <div class="meta" id="resultMeta"></div>
+        <div class="actions">
+          <a class="button primary" id="resultLink" target="_blank" rel="noopener">Ouvrir le lien</a>
+          <button id="again">Scanner à nouveau</button>
+        </div>
+        <details>
+          <summary>Historique de la session (<span id="historyCount">0</span>)</summary>
+          <ol id="history"></ol>
+          <button id="copyHistory" style="margin-top: 8px">Copier l’historique</button>
+        </details>
+      </div>
+    </div>
+    <script type="module" src="./src/scanner.ts"></script>
+  </body>
+</html>

@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Générateur KYcode</title>
+    <link rel="stylesheet" href="./src/styles.css" />
+    <style>
+      main {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 24px 16px 48px;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: 24px;
+      }
+      @media (max-width: 720px) {
+        main {
+          grid-template-columns: minmax(0, 1fr);
+        }
+      }
+      .panel {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 20px;
+        display: grid;
+        gap: 18px;
+        align-content: start;
+      }
+      h1 {
+        font-size: 20px;
+        margin: 0;
+      }
+      .field {
+        display: grid;
+        gap: 6px;
+      }
+      .field > span {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--muted);
+      }
+      .row {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      .row input[type='text'] {
+        flex: 1;
+        min-width: 0;
+      }
+      input[type='color'] {
+        width: 44px;
+        height: 44px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 3px;
+        background: #fff;
+      }
+      input[type='range'] {
+        width: 100%;
+      }
+      #preview {
+        display: grid;
+        place-items: center;
+        background: repeating-conic-gradient(#eef0f3 0 25%, #fff 0 50%) 0 0 / 16px 16px;
+        border-radius: 10px;
+        padding: 12px;
+      }
+      #preview svg {
+        width: 100%;
+        max-width: 380px;
+        height: auto;
+      }
+      .note {
+        font-size: 13px;
+        color: var(--muted);
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="topnav">
+      <span class="brand">KYcode</span>
+      <a href="./index.html" aria-current="page">Générateur</a>
+      <a href="./scan.html">Scanner</a>
+      <a href="./feuille-test.html">Feuille de test</a>
+    </nav>
+    <main>
+      <section class="panel">
+        <h1>Créer un KYcode</h1>
+        <label class="field">
+          <span>Identifiant (8 caractères 0-9, A-Z, a-z)</span>
+          <div class="row">
+            <input type="text" id="idInput" maxlength="8" autocomplete="off" spellcheck="false" />
+            <button id="randomBtn">Aléatoire</button>
+          </div>
+          <span id="idError" class="status bad" hidden></span>
+        </label>
+        <p class="note">Lien encodé : <span class="mono" id="linkPreview"></span></p>
+        <div class="row">
+          <label class="field"><span>Couleur</span><input type="color" id="fg" value="#000000" /></label>
+          <label class="field"><span>Fond</span><input type="color" id="bg" value="#ffffff" /></label>
+          <label class="row" style="align-self: end; min-height: 44px">
+            <input type="checkbox" id="transparent" /> Fond transparent
+          </label>
+        </div>
+        <label class="field">
+          <span>Espacement des cellules : <b id="insetValue">0 %</b></span>
+          <input type="range" id="inset" min="0" max="15" step="1" value="0" />
+        </label>
+        <label class="field">
+          <span>Largeur du PNG (px)</span>
+          <input type="text" id="pngWidth" value="1200" inputmode="numeric" />
+        </label>
+        <div class="row">
+          <button class="primary" id="svgBtn">Télécharger SVG</button>
+          <button id="pngBtn">Télécharger PNG</button>
+        </div>
+      </section>
+      <section class="panel">
+        <div id="preview"></div>
+        <div id="check" class="status">Vérification…</div>
+        <p class="note" id="checkDetail"></p>
+      </section>
+    </main>
+    <script type="module" src="./src/generator.ts"></script>
+  </body>
+</html>

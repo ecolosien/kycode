@@ -1,6 +1,4 @@
-# kycode
-Triangular 2D code by KysKan: SVG/PNG generator and web scanner with Reed-Solomon error correction.
-KYcode
+# KYcode
 
 **Le code graphique triangulaire de [KysKan](https://kyskan.com).**
 
@@ -14,12 +12,12 @@ Un KYcode est un symbole en forme de triangle équilatéral : 3 repères triangu
 
 ## État du projet
 
-| Étape                                                                | État                                         |
-| -------------------------------------------------------------------- | -------------------------------------------- |
-| 1. Spécification du format v0                                        | ✅                                            |
-| 2. Encodeur, rendu SVG, décodeur sur image fixe, tests de robustesse | ✅                                            |
-| 3. Scanner caméra web, générateur, feuille de test                   | ✅ construit — essais sur téléphones en cours |
-| 4. Service de redirection kyskan.com, variantes de style             | à venir                                      |
+| Étape | État |
+|---|---|
+| 1. Spécification du format v0 | ✅ |
+| 2. Encodeur, rendu SVG, décodeur sur image fixe, tests de robustesse | ✅ |
+| 3. Scanner caméra web, générateur, feuille de test | ✅ construit — essais sur téléphones en cours |
+| 4. Service de redirection kyskan.com, variantes de style | à venir |
 
 ## Démarrage
 
@@ -33,16 +31,16 @@ npm run dev:local
 
 Puis ouvrir http://localhost:5174 (générateur), `/scan.html` (scanner, `?demo` pour une caméra simulée) ou `/feuille-test.html`.
 
-| Commande            | Rôle                                                                      |
-| ------------------- | ------------------------------------------------------------------------- |
-| `npm test`          | Tests automatiques (géométrie, Reed-Solomon, encodeur, rendu, décodeur)   |
-| `npm run typecheck` | Vérification TypeScript                                                   |
-| `npm run dev`       | Application web en **HTTPS** sur le réseau local (scan avec un téléphone) |
-| `npm run dev:local` | Application web en HTTP sur localhost                                     |
-| `npm run build`     | Version statique dans `dist/`                                             |
-| `npm run limits`    | Limites du décodeur sur scènes synthétiques                               |
-| `npm run bench`     | Vitesse de décodage sur une image de taille caméra                        |
-| `npm run examples`  | Exemples dans `docs/exemples/`                                            |
+| Commande | Rôle |
+|---|---|
+| `npm test` | Tests automatiques (géométrie, Reed-Solomon, encodeur, rendu, décodeur) |
+| `npm run typecheck` | Vérification TypeScript |
+| `npm run dev` | Application web en **HTTPS** sur le réseau local (scan avec un téléphone) |
+| `npm run dev:local` | Application web en HTTP sur localhost |
+| `npm run build` | Version statique dans `dist/` |
+| `npm run limits` | Limites du décodeur sur scènes synthétiques |
+| `npm run bench` | Vitesse de décodage sur une image de taille caméra |
+| `npm run examples` | Exemples dans `docs/exemples/` |
 
 ### Tester avec un téléphone
 
